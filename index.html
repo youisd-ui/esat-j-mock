@@ -3,636 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ESAT-J YEAR 3 模試 第1回</title>
+<title>ESAT-J YEAR 3 模試</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 <style>
-/* Layout: a tablet-style exam console — one centred sheet, status strip on top, timer strip on bottom */
+/* Layout: one column — title sheet, five round cards in a grid, then how-to and notes */
 :root{
   --bg:#EEF2F6; --sheet:#FFFFFF; --ink:#17212B; --muted:#5B6878; --line:#D5DDE6;
-  --accent:#2C5BD0; --accent-soft:#E3EBFB; --prep:#B7791F; --prep-soft:#FBF1DF;
-  --rec:#CC3A3A; --rec-soft:#FBE6E6; --ok:#2E7D4F; --ok-soft:#E2F2E8;
-  --ill-sky:#EAF2FB; --ill-ground:#C9D3DE; --ill-skin:#F2CDA9; --ill-hair:#3A2E28; --ill-grey:#B9BEC4;
-  --ill-shirt:#2C5BD0; --ill-coat:#9B5C8F; --ill-bag:#8A6A3E; --ill-stroke:#17212B;
+  --accent:#2C5BD0; --accent-soft:#E3EBFB; --ok:#2E7D4F; --ok-soft:#E2F2E8; --prep:#B7791F; --prep-soft:#FBF1DF;
   --f-jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
   --f-en:"Lexend","Segoe UI",Roboto,Arial,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#10161D; --sheet:#18212B; --ink:#E6ECF2; --muted:#9AA8B8; --line:#2C3946;
-  --accent:#7FA2F2; --accent-soft:#1E2B45; --prep:#E3B25E; --prep-soft:#33291A;
-  --rec:#F07A7A; --rec-soft:#3A2020; --ok:#6FCB95; --ok-soft:#1B3326;
-  --ill-sky:#1F2C3A; --ill-ground:#3A4756; --ill-skin:#E8BF98; --ill-hair:#2A211C; --ill-grey:#C7CCD2;
-  --ill-shirt:#5C86E8; --ill-coat:#B97CAD; --ill-bag:#B08850; --ill-stroke:#E6ECF2;
-  color-scheme:dark;}}
+  --accent:#7FA2F2; --accent-soft:#1E2B45; --ok:#6FCB95; --ok-soft:#1B3326; --prep:#E3B25E; --prep-soft:#33291A; color-scheme:dark;}}
 :root[data-theme="dark"]{
   --bg:#10161D; --sheet:#18212B; --ink:#E6ECF2; --muted:#9AA8B8; --line:#2C3946;
-  --accent:#7FA2F2; --accent-soft:#1E2B45; --prep:#E3B25E; --prep-soft:#33291A;
-  --rec:#F07A7A; --rec-soft:#3A2020; --ok:#6FCB95; --ok-soft:#1B3326;
-  --ill-sky:#1F2C3A; --ill-ground:#3A4756; --ill-skin:#E8BF98; --ill-hair:#2A211C; --ill-grey:#C7CCD2;
-  --ill-shirt:#5C86E8; --ill-coat:#B97CAD; --ill-bag:#B08850; --ill-stroke:#E6ECF2;
-  color-scheme:dark;}
+  --accent:#7FA2F2; --accent-soft:#1E2B45; --ok:#6FCB95; --ok-soft:#1B3326; --prep:#E3B25E; --prep-soft:#33291A; color-scheme:dark;}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:16px;line-height:1.75;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
-.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 h1,h2,h3{text-wrap:balance;line-height:1.35;margin:0}
-h1{font-size:1.6rem;font-weight:700}
-h2{font-size:1.25rem;font-weight:700}
-h3{font-size:1.05rem;font-weight:700}
+h1{font-size:1.75rem}
+h2{font-size:1.2rem}
 p{margin:0}
-.en{font-family:var(--f-en)}
 .muted{color:var(--muted)}
 .small{font-size:.875rem}
-.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px;min-width:0}
 .eyebrow{font-size:.78rem;letter-spacing:.08em;color:var(--muted);font-weight:500}
-button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);padding:10px 18px;font-weight:500}
-button:hover{border-color:var(--accent)}
-button:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-button.primary{background:var(--accent);border-color:var(--accent);color:var(--sheet);font-weight:700}
-button.primary:hover{filter:brightness(1.08)}
-button.danger{color:var(--rec)}
-button:disabled{opacity:.45;cursor:not-allowed}
-.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-.part-btn{text-align:left;display:flex;flex-direction:column;gap:2px;padding:14px 16px}
-.part-btn b{font-size:1rem}
-.part-btn span{font-size:.82rem;color:var(--muted);font-weight:400}
-.check{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:10px}
-.dot{width:12px;height:12px;border-radius:50%;background:var(--line);flex:none;margin-top:8px}
-.dot.ok{background:var(--ok)} .dot.ng{background:var(--rec)}
-.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;flex:1;min-width:80px}
-.meter i{display:block;height:100%;width:0;background:var(--ok);transition:width .08s linear}
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.countdown{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline}
+.countdown b{font-family:var(--f-en);font-size:2rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent);line-height:1}
+.rounds{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.round{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;color:inherit;text-decoration:none;min-width:0;transition:border-color .15s,transform .15s}
+.round:hover{border-color:var(--accent);transform:translateY(-2px)}
+.round:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.round{transition:none}.round:hover{transform:none}}
+.round-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.round-no{font-family:var(--f-en);font-weight:600;font-size:.95rem;color:var(--accent)}
+.round-no span{font-family:var(--f-jp);font-size:1.35rem;font-weight:700;color:var(--ink);margin-left:6px}
+.status{font-size:.75rem;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--bg);color:var(--muted);white-space:nowrap}
+.status.done{background:var(--ok-soft);color:var(--ok)}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.88rem}
+dt{color:var(--muted);font-weight:500;white-space:nowrap}
+dd{margin:0}
+.go{margin-top:auto;font-weight:700;color:var(--accent);font-size:.92rem}
+ol{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:6px}
+.note{border-left:4px solid var(--prep);padding:8px 12px;background:var(--prep-soft);border-radius:0 8px 8px 0;font-size:.9rem}
 table{border-collapse:collapse;width:100%;font-size:.9rem}
-th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
-th{font-weight:700;color:var(--muted);font-size:.8rem;letter-spacing:.04em}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}
+th{font-weight:700;color:var(--muted);font-size:.8rem}
 td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tablebox{overflow-x:auto}
-
-/* exam console */
-.console-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:700;background:var(--accent-soft);color:var(--accent)}
-.instr{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.98rem}
-.passage{font-family:var(--f-en);font-size:1.25rem;line-height:1.9;padding:18px 20px;border:2px solid var(--line);border-radius:10px;max-width:62ch}
-.stage{display:flex;flex-direction:column;gap:14px;align-items:stretch;min-height:120px}
-.stage svg{width:100%;height:auto;max-width:100%;display:block}
-.prompt-box{border:2px solid var(--accent);border-radius:10px;padding:14px 18px;font-size:1.1rem;font-weight:700;text-align:center}
-.theme-card{border:2px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
-.theme-card .q{font-family:var(--f-en);font-size:1.35rem;font-weight:600}
-.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.chip{font-family:var(--f-en);border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:.95rem}
-.starter{font-family:var(--f-en);font-weight:600;font-size:1.05rem;border:2px dashed var(--accent);border-radius:8px;padding:4px 14px;align-self:flex-start}
-.timer{display:flex;align-items:center;gap:14px;border-radius:12px;padding:12px 16px;background:var(--bg);flex-wrap:wrap}
-.timer .label{font-weight:700;min-width:6.5em}
-.timer .sec{font-family:var(--f-en);font-variant-numeric:tabular-nums;font-size:1.6rem;font-weight:600;min-width:3ch;text-align:right}
-.timer .bar{flex:1;min-width:120px;height:10px;border-radius:5px;background:var(--line);overflow:hidden}
-.timer .bar i{display:block;height:100%;width:0;background:var(--muted)}
-.timer.prep{background:var(--prep-soft)} .timer.prep .label,.timer.prep .sec{color:var(--prep)} .timer.prep .bar i{background:var(--prep)}
-.timer.rec{background:var(--rec-soft)} .timer.rec .label,.timer.rec .sec{color:var(--rec)} .timer.rec .bar i{background:var(--rec)}
-.timer.listen .label{color:var(--accent)}
-.recdot{width:12px;height:12px;border-radius:50%;background:var(--rec);animation:blink 1s infinite}
-@keyframes blink{50%{opacity:.25}}
-@media (prefers-reduced-motion:reduce){.recdot{animation:none}}
-.live{font-family:var(--f-en);font-size:.9rem;color:var(--muted);min-height:1.6em}
-
-/* results */
-.item{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px}
-.item-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
-.metrics{display:flex;flex-wrap:wrap;gap:6px}
-.metric{font-size:.8rem;padding:2px 10px;border-radius:999px;background:var(--bg);font-variant-numeric:tabular-nums}
-.metric.warn{background:var(--prep-soft);color:var(--prep)}
-.metric.bad{background:var(--rec-soft);color:var(--rec)}
-.metric.good{background:var(--ok-soft);color:var(--ok)}
-textarea{width:100%;font-family:var(--f-en);font-size:.95rem;line-height:1.6;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--sheet);color:var(--ink);resize:vertical}
-audio{width:100%;max-width:420px;height:36px}
-.missed{font-family:var(--f-en);font-size:.88rem}
-.missed s{color:var(--rec);text-decoration-thickness:2px}
-details summary{cursor:pointer;font-weight:700}
-.model{font-family:var(--f-en);font-size:.92rem;background:var(--bg);border-radius:8px;padding:10px 12px}
-.note{border-left:4px solid var(--prep);padding:8px 12px;background:var(--prep-soft);border-radius:0 8px 8px 0;font-size:.9rem}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--sheet);padding:8px 18px;border-radius:999px;font-size:.9rem}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<!-- ========== HOME ========== -->
-<section id="home" class="wrap" style="gap:20px">
+<main class="wrap">
   <header class="sheet">
     <p class="eyebrow">中学校英語スピーキングテスト ESAT-J YEAR 3 形式</p>
-    <h1>ESAT-J YEAR 3 模試 第1回</h1>
-    <p>本番と同じ4パート・9問の構成です。問題は音声で流れ、準備時間と解答時間はタイマーで自動的に進みます。録音された解答は文字に起こされ、最後に採点用のテキストができます。それをClaudeのチャットに貼り付けると、公式の採点基準に沿った評価とアドバイスが返ってきます。</p>
-    <div class="tablebox">
-    <table>
+    <h1>ESAT-J YEAR 3 模試</h1>
+    <p>本番と同じ4パート・9問の模試が5回分あります。問題は音声で流れ、準備時間と解答時間はタイマーで進みます。終わったら採点用のテキストをClaudeに貼り付けて、採点とアドバイスを受けてください。</p>
+    <div class="countdown" id="countdown"><span class="small muted">本番（令和8年11月22日）まで</span><b id="days">–</b><span class="small muted">日</span></div>
+  </header>
+
+  <section class="rounds" aria-label="模試の一覧">
+    <a class="round" href="./mock1/"><div class="round-head"><p class="round-no">ROUND 1<span>第1回</span></p><span class="status" data-round="1">未受験</span></div>
+      <dl><dt>Part B</dt><dd>オーストラリア・町のイベント</dd><dt>Part C</dt><dd>駅でおばあさんを助ける</dd><dt>Part D</dt><dd>夏休みの一番よい過ごし方</dd></dl><p class="go">受験する →</p></a>
+    <a class="round" href="./mock2/"><div class="round-head"><p class="round-no">ROUND 2<span>第2回</span></p><span class="status" data-round="2">未受験</span></div>
+      <dl><dt>Part B</dt><dd>カナダ・科学博物館</dd><dt>Part C</dt><dd>公園で男の子のボールを取る</dd><dt>Part D</dt><dd>町をよりよくするために</dd></dl><p class="go">受験する →</p></a>
+    <a class="round" href="./mock3/"><div class="round-head"><p class="round-no">ROUND 3<span>第3回</span></p><span class="status" data-round="3">未受験</span></div>
+      <dl><dt>Part B</dt><dd>アメリカ・カフェテリア</dd><dt>Part C</dt><dd>雨の日に友だちの傘で帰る</dd><dt>Part D</dt><dd>健康のために一番大切なこと</dd></dl><p class="go">受験する →</p></a>
+    <a class="round" href="./mock4/"><div class="round-head"><p class="round-no">ROUND 4<span>第4回</span></p><span class="status" data-round="4">未受験</span></div>
+      <dl><dt>Part B</dt><dd>ニュージーランド・スポーツセンター</dd><dt>Part C</dt><dd>病気の母のために夕食を作る</dd><dt>Part D</dt><dd>新しい友だちを作るよい方法</dd></dl><p class="go">受験する →</p></a>
+    <a class="round" href="./mock5/"><div class="round-head"><p class="round-no">ROUND 5<span>第5回</span></p><span class="status" data-round="5">未受験</span></div>
+      <dl><dt>Part B</dt><dd>イギリス・町のガイドブック</dd><dt>Part C</dt><dd>拾った財布を交番に届ける</dd><dt>Part D</dt><dd>環境を守るためにできること</dd></dl><p class="go">受験する →</p></a>
+  </section>
+
+  <section class="sheet">
+    <h2>使い方</h2>
+    <ol>
+      <li>パソコンのGoogle Chromeで開き、イヤホンマイクかヘッドセットをつけます。</li>
+      <li>各回のページで「受験前のチェック」をして、マイクの使用を「許可」します。</li>
+      <li>「通しで受験する」で約15分。パートごとの練習もできます。</li>
+      <li>終わったら「採点用テキストをコピー」を押し、Claudeのチャットに貼り付けて送信します。</li>
+    </ol>
+    <div class="tablebox"><table>
       <thead><tr><th>パート</th><th>内容</th><th>問題数</th><th>準備</th><th>解答</th></tr></thead>
       <tbody>
         <tr><td>Part A</td><td>音読</td><td class="num">2</td><td class="num">30秒</td><td class="num">30秒</td></tr>
-        <tr><td>Part B</td><td>会話（質問に答える4問・質問する1問）</td><td class="num">5</td><td class="num">なし／No.5のみ10秒</td><td class="num">15秒以内</td></tr>
+        <tr><td>Part B</td><td>会話（答える4問・質問する1問）</td><td class="num">5</td><td class="num">なし／No.5のみ10秒</td><td class="num">15秒以内</td></tr>
         <tr><td>Part C</td><td>4コマのイラストを説明する</td><td class="num">1</td><td class="num">30秒</td><td class="num">40秒以内</td></tr>
         <tr><td>Part D</td><td>自分の意見を述べる</td><td class="num">1</td><td class="num">60秒</td><td class="num">40秒以内</td></tr>
-      </tbody>
-    </table>
-    </div>
-  </header>
-
-  <section class="sheet">
-    <h2>受験前のチェック</h2>
-    <p class="small muted">パソコンのGoogle Chromeで、イヤホンマイクかヘッドセットを使うのがおすすめです。スピーカーだと問題の音声を自分の解答として拾ってしまうことがあります。</p>
-    <div class="check"><span class="dot" id="dot-mic"></span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
-      <b>1. マイク</b>
-      <div class="row"><button id="btn-mic">マイクを使えるようにする</button><div class="meter" aria-label="入力レベル"><i id="mic-level"></i></div></div>
-      <p class="small muted" id="mic-msg">ボタンを押すとブラウザがマイクの使用許可を求めます。「許可」を選んでください。</p>
-    </div></div>
-    <div class="check"><span class="dot" id="dot-tts"></span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
-      <b>2. 問題の読み上げ</b>
-      <div class="row"><button id="btn-tts">音声を試す</button></div>
-      <p class="small muted" id="tts-msg">英語の音声が聞こえたら準備OKです。</p>
-    </div></div>
-    <div class="check"><span class="dot" id="dot-sr"></span><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
-      <b>3. 文字起こし</b>
-      <div class="row"><button id="btn-sr">5秒間話してみる</button></div>
-      <p class="small muted" id="sr-msg">「Hello. My name is ...」と言ってみてください。英語が文字になれば準備OKです。</p>
-      <p class="live" id="sr-live"></p>
-    </div></div>
+      </tbody></table></div>
+    <p class="note">録音と文字起こしはブラウザの中だけで処理され、このサイトのサーバーには送られません。問題はこの模試のためのオリジナルで、採点は公式の採点基準を参考にした目安です。</p>
   </section>
-
-  <section class="sheet">
-    <h2>受験する</h2>
-    <div class="row"><button class="primary" id="btn-full">通しで受験する（約15分）</button></div>
-    <p class="small muted">パートごとに練習することもできます。</p>
-    <div class="parts">
-      <button class="part-btn" data-part="A"><b>Part A 音読</b><span>2問・約3分</span></button>
-      <button class="part-btn" data-part="B"><b>Part B 会話</b><span>5問・約4分</span></button>
-      <button class="part-btn" data-part="C"><b>Part C ナレーション</b><span>1問・約2分</span></button>
-      <button class="part-btn" data-part="D"><b>Part D 意見</b><span>1問・約3分</span></button>
-    </div>
-  </section>
-
-  <p class="small muted">問題はこの模試のためのオリジナルです。採点結果は公式の採点基準を参考にした目安で、実際の試験のスコアとは異なります。</p>
-</section>
-
-<!-- ========== EXAM ========== -->
-<section id="exam" class="sheet" hidden>
-  <div class="console-top">
-    <div class="row"><span class="pill" id="ex-part">Part A</span><span class="en muted" id="ex-no"></span></div>
-    <button class="danger" id="btn-quit">中断する</button>
-  </div>
-  <p class="instr" id="ex-instr"></p>
-  <div class="stage" id="ex-stage"></div>
-  <div class="timer" id="ex-timer" hidden>
-    <span class="label" id="t-label"></span>
-    <span class="bar"><i id="t-bar"></i></span>
-    <span class="sec" id="t-sec"></span>
-    <span class="recdot" id="t-dot" hidden></span>
-    <span class="meter" id="t-meter-wrap" hidden style="max-width:120px"><i id="t-meter"></i></span>
-  </div>
-  <p class="live" id="ex-live" aria-live="polite"></p>
-</section>
-
-<!-- ========== RESULTS ========== -->
-<section id="results" class="wrap" hidden style="gap:20px">
-  <section class="sheet">
-    <p class="eyebrow">受験おつかれさまでした</p>
-    <h2>解答の確認と採点</h2>
-    <p>下の各問題で録音を聞き返し、文字起こしが実際に話した内容とちがうところがあれば直してください。音声認識が聞き取れなかった語は、そのまま残しておくと「通じにくかった可能性がある箇所」として評価に使われます。</p>
-    <p class="note">文字起こしは聞き手の耳の代わりです。発音の細かい点（個々の音やイントネーション）は判定できないため、「音声認識に正しく伝わったか」を手がかりに評価します。</p>
-  </section>
-  <div id="res-items" class="wrap" style="gap:14px"></div>
-  <section class="sheet">
-    <h2>Claudeに採点してもらう</h2>
-    <p>「採点用テキストをコピー」を押して、Claudeのチャット画面に貼り付けて送信してください。公式の採点基準に沿って、パートごとのレベル、推定GRADE、改善点が返ってきます。</p>
-    <div class="row"><button class="primary" id="btn-copy">採点用テキストをコピー</button><button id="btn-save">テキストファイルで保存</button><button id="btn-home">ホームに戻る</button></div>
-    <details><summary>採点用テキストを表示</summary><textarea id="prompt-out" rows="14" readonly style="margin-top:10px"></textarea></details>
-  </section>
-  <section class="sheet">
-    <h2>解答例</h2>
-    <div id="models" class="wrap" style="gap:12px"></div>
-  </section>
-</section>
-</div>
-
+</main>
 <script>
-"use strict";
-/* ---------------- content ---------------- */
-const PASSAGE_A1 = "Welcome to our school! Today, I'd like to tell you about our library. It has more than ten thousand books. Many students go there after lunch. You can also borrow English comics. If you have time, please visit it. I'm sure you'll enjoy it.";
-const PASSAGE_A2 = "This is my grandfather. He lives near the sea. He has been a fisherman for forty years. Every morning, he gets up at four. Last summer, I went fishing with him. He taught me how to use a boat. I want to be strong like him.";
-const D_TALK = "Hello everyone. Today you will make this short speech: What is the best way to spend summer vacation? Choose one of these ideas: traveling, volunteering, reading books, or your own idea. Tell us why this idea is the best way. Give reasons and examples in your short speech.";
-
-const ITEMS = {
-  A1:{part:"A",no:"No. 1",label:"Part A No.1 音読",prep:30,rec:30,
-    context:"あなたは、姉妹校の生徒が学校を訪れる日に、校内放送で学校の図書館を紹介するところです。",
-    script:PASSAGE_A1, model:"（台本どおりに、意味のまとまりで区切りながら読む）"},
-  A2:{part:"A",no:"No. 2",label:"Part A No.2 音読",prep:30,rec:30,
-    context:"あなたは、英語の授業で、自分の家族を紹介する動画を作っているところです。",
-    script:PASSAGE_A2, model:"（台本どおりに、意味のまとまりで区切りながら読む）"},
-  B1:{part:"B",no:"No. 1",label:"Part B No.1",prep:0,rec:15,question:"Which event do you want to join?",
-    context:"オーストラリアの町のイベントのチラシ（Cooking Class / Kite Contest / Night Concert）を見ながら、クラスメイトのエマに質問される。",
-    model:"I want to join the cooking class. / The Kite Contest."},
-  B2:{part:"B",no:"No. 2",label:"Part B No.2",prep:0,rec:15,question:"Why do you want to join it?",
-    context:"No.1で選んだイベントに参加したい理由を聞かれる。",
-    model:"Because I like cooking. / Because I want to make a kite. / Because I love music."},
-  B3:{part:"B",no:"No. 3",label:"Part B No.3",prep:0,rec:15,question:"What time do you usually get up on school days?",
-    context:"日本での生活について聞かれる。",
-    model:"I usually get up at six thirty. / At seven."},
-  B4:{part:"B",no:"No. 4",label:"Part B No.4",prep:0,rec:15,question:"What did you do last weekend?",
-    context:"日本での生活について聞かれる。",
-    model:"I played soccer with my friends. / I went shopping with my family."},
-  B5:{part:"B",no:"No. 5",label:"Part B No.5（質問する）",prep:10,rec:15,
-    context:"エマに対して「オーストラリアで人気のスポーツ」について英語で質問する。",
-    model:"What sport is popular in Australia? / What is the most popular sport in Australia?"},
-  C:{part:"C",no:"",label:"Part C ナレーション",prep:30,rec:40,
-    context:"留学生のトムに、先週の出来事を英語で説明する。“Last week” で始める。イラスト：(1) 駅の階段の下で、大きな荷物を二つ持ったおばあさんが困っている。主人公は通学中。(2) 主人公がおばあさんに声をかける。(3) 主人公が荷物を持って一緒に階段を上る。(4) 階段の上でおばあさんが笑顔でお礼を言い、主人公にあめをくれる。説明する上で重要なポイント：駅の階段／おばあさんが重い荷物で困っていた／声をかけた（Can I help you?）／荷物を持って階段を上った／お礼を言われ、あめをもらった（うれしそうだった）。",
-    model:"Last week, I was at the station. I saw an old woman at the bottom of the stairs. She had two big bags, and she looked tired. So I said to her, \"Can I help you?\" I carried her bags up the stairs. At the top, she said, \"Thank you,\" and gave me some candy. I was very happy."},
-  D:{part:"D",no:"",label:"Part D 意見",prep:60,rec:40,
-    context:"テーマ「What is the best way to spend summer vacation?」。ヒント：traveling / volunteering / reading books / your own idea。理由や具体例を加えてできるだけ詳しく述べる。",
-    model:"I think traveling is the best way to spend summer vacation. Traveling gives us new experiences. For example, last summer I went to Hokkaido with my family, and I ate fresh seafood for the first time. I also learned about the history of the area. So I think traveling is the best way."}
-};
-const ORDER = {A:["A1","A2"],B:["B1","B2","B3","B4","B5"],C:["C"],D:["D"]};
-const PART_NAME = {A:"Part A 音読",B:"Part B 会話",C:"Part C ナレーション",D:"Part D 意見"};
-
-/* ---------------- illustrations (SVG) ---------------- */
-function face(x,y,mood){
-  const m = mood==="happy" ? `<path d="M${x-5} ${y+3} Q${x} ${y+8} ${x+5} ${y+3}" fill="none" stroke="var(--ill-stroke)" stroke-width="1.6"/>`
-          : mood==="sad" ? `<path d="M${x-5} ${y+6} Q${x} ${y+1} ${x+5} ${y+6}" fill="none" stroke="var(--ill-stroke)" stroke-width="1.6"/>`
-          : `<line x1="${x-4}" y1="${y+5}" x2="${x+4}" y2="${y+5}" stroke="var(--ill-stroke)" stroke-width="1.6"/>`;
-  return `<circle cx="${x-4}" cy="${y-2}" r="1.6" fill="var(--ill-stroke)"/><circle cx="${x+4}" cy="${y-2}" r="1.6" fill="var(--ill-stroke)"/>${m}`;
-}
-/* person standing with feet at (x,y) */
-function person(x,y,o={}){
-  const hx=x, hy=y-72, top=y-60, hip=y-28;
-  const hair = o.old ? `<circle cx="${hx}" cy="${hy-4}" r="12" fill="var(--ill-grey)"/><circle cx="${hx+(o.flip?-10:10)}" cy="${hy-10}" r="6" fill="var(--ill-grey)"/>`
-                     : `<path d="M${hx-12} ${hy} A12 12 0 0 1 ${hx+12} ${hy} L${hx+12} ${hy-3} L${hx-12} ${hy-3}Z" fill="var(--ill-hair)"/>`;
-  const body = `<rect x="${x-12}" y="${top}" width="24" height="${hip-top}" rx="6" fill="${o.old?'var(--ill-coat)':'var(--ill-shirt)'}"/>`;
-  const legs = `<line x1="${x-6}" y1="${hip}" x2="${x-7}" y2="${y}" stroke="var(--ill-stroke)" stroke-width="4" stroke-linecap="round"/><line x1="${x+6}" y1="${hip}" x2="${x+7}" y2="${y}" stroke="var(--ill-stroke)" stroke-width="4" stroke-linecap="round"/>`;
-  const arms = o.armsUp
-    ? `<line x1="${x-11}" y1="${top+6}" x2="${x-18}" y2="${top+26}" stroke="var(--ill-skin)" stroke-width="5" stroke-linecap="round"/><line x1="${x+11}" y1="${top+6}" x2="${x+22}" y2="${top+18}" stroke="var(--ill-skin)" stroke-width="5" stroke-linecap="round"/>`
-    : `<line x1="${x-11}" y1="${top+6}" x2="${x-16}" y2="${top+30}" stroke="var(--ill-skin)" stroke-width="5" stroke-linecap="round"/><line x1="${x+11}" y1="${top+6}" x2="${x+16}" y2="${top+30}" stroke="var(--ill-skin)" stroke-width="5" stroke-linecap="round"/>`;
-  return `<g>${legs}${body}${arms}<circle cx="${hx}" cy="${hy}" r="12" fill="var(--ill-skin)"/>${hair}${face(hx,hy,o.mood)}</g>`;
-}
-function bag(x,y,w=20,h=18){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="var(--ill-bag)" stroke="var(--ill-stroke)" stroke-width="1"/><path d="M${x+5} ${y} q${w/2-5} -8 ${w-10} 0" fill="none" stroke="var(--ill-stroke)" stroke-width="1.4"/>`;}
-function stairs(x0,y0,n=5,step=20,dir=1){
-  let d=`M${x0} ${y0}`; let x=x0,y=y0;
-  for(let i=0;i<n;i++){ y-=step; d+=` L${x} ${y}`; x+=step*dir; d+=` L${x} ${y}`; }
-  d+=` L${x} ${y0} Z`;
-  return `<path d="${d}" fill="var(--ill-ground)" stroke="var(--ill-stroke)" stroke-width="1.2"/>`;
-}
-function bubble(x,y,content){return `<g><rect x="${x-20}" y="${y-18}" width="40" height="28" rx="12" fill="var(--sheet)" stroke="var(--ill-stroke)" stroke-width="1.2"/><path d="M${x-4} ${y+10} L${x-8} ${y+20} L${x+4} ${y+10}" fill="var(--sheet)" stroke="var(--ill-stroke)" stroke-width="1.2"/><text x="${x}" y="${y+2}" text-anchor="middle" font-family="Lexend,Arial" font-size="15" font-weight="600" fill="var(--ill-stroke)">${content}</text></g>`;}
-function panel(n,inner){
-  return `<svg viewBox="0 0 240 190" role="img" aria-label="イラスト${n}"><rect x="1" y="1" width="238" height="188" rx="8" fill="var(--ill-sky)" stroke="var(--line)" stroke-width="2"/>
-  <rect x="2" y="160" width="236" height="28" fill="var(--ill-ground)"/>${inner}
-  <circle cx="20" cy="20" r="12" fill="var(--sheet)" stroke="var(--ill-stroke)" stroke-width="1.2"/><text x="20" y="25" text-anchor="middle" font-family="Lexend,Arial" font-size="13" font-weight="600" fill="var(--ill-stroke)">${n}</text></svg>`;
-}
-function stationSign(x,y){return `<rect x="${x}" y="${y}" width="74" height="22" rx="4" fill="var(--sheet)" stroke="var(--ill-stroke)" stroke-width="1.2"/><text x="${x+37}" y="${y+15}" text-anchor="middle" font-family="Lexend,Arial" font-size="11" font-weight="600" fill="var(--ill-stroke)">STATION</text>`;}
-
-function partCSvg(){
-  const p1 = panel(1, stationSign(44,12) + stairs(140,160) +
-     person(52,160,{mood:"neutral"}) + bag(36,112,14,16) +
-     `<text x="52" y="62" text-anchor="middle" font-family="Lexend,Arial" font-size="11" font-weight="600" fill="var(--ill-shirt)">You</text>` +
-     person(116,160,{old:true,mood:"sad"}) + bag(90,136,22,22) + bag(126,136,22,22) +
-     `<path d="M132 84 q3 6 0 9 q-3 -3 0 -9z" fill="var(--accent)"/>`);
-  const p2 = panel(2, stairs(140,160) + person(70,160,{mood:"neutral"}) + bubble(70,58,"?") +
-     person(116,160,{old:true,mood:"neutral"}) + bag(90,136,22,22) + bag(126,136,22,22));
-  const p3 = panel(3, stairs(110,160) + person(160,100,{mood:"happy"}) + bag(140,66,20,20) + bag(166,66,20,20) +
-     person(120,140,{old:true,mood:"happy"}));
-  const p4 = panel(4, `<path d="M150 160 L150 140 L238 140 L238 160Z" fill="var(--ill-ground)"/>` +
-     person(80,160,{mood:"happy"}) + person(140,160,{old:true,mood:"happy",armsUp:true}) +
-     `<g transform="translate(108 112)"><circle r="6" fill="var(--rec)"/><path d="M-6 0 l-6 -5 v10z M6 0 l6 -5 v10z" fill="var(--rec)"/></g>` +
-     bubble(150,58,"♡") + bag(170,136,22,22) + bag(196,136,22,22) );
-  return `<div style="display:flex;flex-direction:column;gap:10px"><span class="starter">Last week …</span>
-   <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">${p1}${p2}${p3}${p4}</div></div>`;
-}
-
-function flyerSvg(){
-  const ev=(x,title,time,place,icon)=>`<g transform="translate(${x} 92)">
-    <rect width="190" height="190" rx="10" fill="var(--sheet)" stroke="var(--ill-stroke)" stroke-width="1.4"/>
-    <g transform="translate(95 60)">${icon}</g>
-    <text x="95" y="128" text-anchor="middle" font-family="Lexend,Arial" font-size="17" font-weight="600" fill="var(--ill-stroke)">${title}</text>
-    <text x="95" y="152" text-anchor="middle" font-family="Lexend,Arial" font-size="14" fill="var(--ill-stroke)">${time}</text>
-    <text x="95" y="172" text-anchor="middle" font-family="Lexend,Arial" font-size="13" fill="var(--muted)">${place}</text></g>`;
-  const pan = `<ellipse cx="-6" cy="8" rx="34" ry="14" fill="var(--ill-grey)" stroke="var(--ill-stroke)" stroke-width="1.4"/><rect x="26" y="4" width="34" height="8" rx="4" fill="var(--ill-bag)"/><path d="M-16 -18 q6 -10 0 -20 M-2 -16 q6 -10 0 -20 M12 -18 q6 -10 0 -20" fill="none" stroke="var(--muted)" stroke-width="2"/>`;
-  const kite = `<path d="M0 -40 L28 0 L0 34 L-28 0Z" fill="var(--ill-shirt)" stroke="var(--ill-stroke)" stroke-width="1.4"/><line x1="0" y1="-40" x2="0" y2="34" stroke="var(--ill-stroke)"/><line x1="-28" y1="0" x2="28" y2="0" stroke="var(--ill-stroke)"/><path d="M0 34 q8 6 -3 10" fill="none" stroke="var(--ill-stroke)" stroke-width="1.4"/>`;
-  const music = `<path d="M-14 26 V-24 L22 -34 V16" fill="none" stroke="var(--ill-stroke)" stroke-width="4"/><ellipse cx="-22" cy="26" rx="10" ry="8" fill="var(--ill-coat)"/><ellipse cx="14" cy="16" rx="10" ry="8" fill="var(--ill-coat)"/><circle cx="-40" cy="-30" r="3" fill="var(--prep)"/><circle cx="40" cy="-10" r="3" fill="var(--prep)"/>`;
-  return `<svg viewBox="0 0 640 300" role="img" aria-label="イベントのチラシ"><rect x="1" y="1" width="638" height="298" rx="12" fill="var(--ill-sky)" stroke="var(--line)" stroke-width="2"/>
-   <text x="320" y="44" text-anchor="middle" font-family="Lexend,Arial" font-size="24" font-weight="600" fill="var(--ill-stroke)">Greenfield Town Weekend Festival</text>
-   <text x="320" y="72" text-anchor="middle" font-family="Lexend,Arial" font-size="15" fill="var(--muted)">Saturday, March 14</text>
-   ${ev(15,"Cooking Class","10:00 – 11:30","Community Center",pan)}
-   ${ev(225,"Kite Contest","13:00 – 15:00","Riverside Park",kite)}
-   ${ev(435,"Night Concert","18:30 – 20:00","Town Hall",music)}</svg>`;
-}
-
-/* ---------------- utilities ---------------- */
-const $ = id => document.getElementById(id);
-let RUN = 0;                         // increments on quit, invalidates running flow
-class Aborted extends Error{}
-function guard(token){ if(token!==RUN) throw new Aborted(); }
-function sleep(ms,token){ return new Promise((res,rej)=>{ const t0=performance.now();
-  const tick=()=>{ if(token!==RUN) return rej(new Aborted()); if(performance.now()-t0>=ms) return res(); setTimeout(tick,50); }; tick(); }); }
-function toast(msg){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2200); }
-
-/* speech synthesis */
-let VOICES=[];
-function loadVoices(){ VOICES = ("speechSynthesis" in window) ? speechSynthesis.getVoices() : []; }
-if("speechSynthesis" in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
-function pickVoice(lang){
-  const c = VOICES.filter(v=>v.lang && v.lang.replace("_","-").toLowerCase().startsWith(lang.toLowerCase()));
-  const pref = lang==="en" ? ["Google US English","Samantha","Microsoft Aria","Microsoft Jenny","Microsoft Zira","Alex"] : ["Google 日本語","Kyoko","Microsoft Nanami","Microsoft Haruka"];
-  for(const p of pref){ const v=c.find(v=>v.name.includes(p)); if(v) return v; }
-  return c.find(v=>v.lang.toLowerCase().includes("us")) || c[0] || null;
-}
-function speakOne(text,lang){
-  return new Promise(res=>{
-    if(!("speechSynthesis" in window)) return res();
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang = lang==="en" ? "en-US" : "ja-JP";
-    const v=pickVoice(lang); if(v) u.voice=v;
-    u.rate = lang==="en" ? 0.88 : 1.1;
-    let done=false; const fin=()=>{ if(!done){done=true;res();} };
-    u.onend=fin; u.onerror=fin;
-    speechSynthesis.speak(u);
-    setTimeout(fin, 2000 + text.length*140);   // safety net if onend never fires
+(function(){
+  const exam=new Date(2026,10,22), today=new Date(); today.setHours(0,0,0,0);
+  const d=Math.round((exam-today)/86400000);
+  if(d>=0) document.getElementById("days").textContent=d; else document.getElementById("countdown").hidden=true;
+  document.querySelectorAll(".status").forEach(el=>{
+    let v=null; try{ v=localStorage.getItem("esatj-done-"+el.dataset.round); }catch(_){}
+    if(v){ const t=new Date(v); el.textContent=`受験済み ${t.getMonth()+1}/${t.getDate()}`; el.classList.add("done"); }
   });
-}
-async function speak(text,lang,token){
-  const parts = lang==="en" ? text.match(/[^.!?]+[.!?]*/g) : text.split(/(?<=。)/);
-  for(const p of parts){ if(!p.trim()) continue; guard(token); await speakOne(p.trim(),lang); }
-  guard(token);
-}
-
-/* beep */
-let AC=null;
-function ac(){ if(!AC){ const C=window.AudioContext||window.webkitAudioContext; if(C) AC=new C(); } return AC; }
-function beep(freq=880,dur=.28){ const a=ac(); if(!a) return; const o=a.createOscillator(), g=a.createGain();
-  o.frequency.value=freq; o.type="sine"; g.gain.setValueAtTime(.0001,a.currentTime); g.gain.exponentialRampToValueAtTime(.25,a.currentTime+.02);
-  g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+dur); o.connect(g).connect(a.destination); o.start(); o.stop(a.currentTime+dur+.05); }
-
-/* microphone */
-let STREAM=null, ANALYSER=null, LEVEL_EL=null;
-async function initMic(){
-  if(STREAM) return true;
-  try{
-    STREAM = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
-    const a=ac(); if(a){ const src=a.createMediaStreamSource(STREAM); ANALYSER=a.createAnalyser(); ANALYSER.fftSize=512; src.connect(ANALYSER); meterLoop(); }
-    return true;
-  }catch(e){ return false; }
-}
-function meterLoop(){
-  const buf=new Uint8Array(ANALYSER.fftSize);
-  const f=()=>{ ANALYSER.getByteTimeDomainData(buf); let s=0; for(const v of buf){ const d=(v-128)/128; s+=d*d; }
-    const lvl=Math.min(1,Math.sqrt(s/buf.length)*4);
-    $("mic-level").style.width=(lvl*100)+"%"; $("t-meter").style.width=(lvl*100)+"%"; requestAnimationFrame(f); };
-  f();
-}
-
-/* speech recognition */
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-function startRecognition(onLive){
-  const st={finals:[],interim:"",firstAt:null,lastAt:null,active:true,error:null,ended:null};
-  if(!SR){ st.error="unsupported"; return st; }
-  let r;
-  const make=()=>{
-    r=new SR(); r.lang="en-US"; r.continuous=true; r.interimResults=true; r.maxAlternatives=1;
-    r.onresult=e=>{ const now=performance.now(); if(st.firstAt===null) st.firstAt=now; st.lastAt=now;
-      let interim=""; for(let i=e.resultIndex;i<e.results.length;i++){ const res=e.results[i];
-        if(res.isFinal) st.finals.push({text:res[0].transcript.trim(),conf:res[0].confidence}); else interim+=res[0].transcript; }
-      st.interim=interim; onLive && onLive(st); };
-    r.onerror=e=>{ if(e.error!=="no-speech" && e.error!=="aborted") st.error=e.error; };
-    r.onend=()=>{ if(st.active){ try{ make(); r.start(); }catch(_){} } else if(st.ended) st.ended(); };
-  };
-  make(); try{ r.start(); }catch(e){ st.error="start-failed"; }
-  st.stop=()=>new Promise(res=>{ st.active=false; st.ended=res; try{ r.stop(); }catch(_){ res(); } setTimeout(res,1800); });
-  return st;
-}
-function transcriptOf(st){ const t=st.finals.map(f=>f.text).join(" ").trim(); return (t + (st.interim? " "+st.interim.trim():"")).trim(); }
-
-/* ---------------- exam UI ---------------- */
-function show(id){ for(const s of ["home","exam","results"]) $(s).hidden = s!==id; window.scrollTo(0,0); }
-function setHeader(item){ $("ex-part").textContent=PART_NAME[item.part]; $("ex-no").textContent=item.no||""; }
-function setInstr(html){ $("ex-instr").innerHTML=html; }
-function setStage(html){ $("ex-stage").innerHTML=html; }
-function timerOff(){ $("ex-timer").hidden=true; $("ex-live").textContent=""; }
-async function countdown(sec,mode,label,token,onTick){
-  const T=$("ex-timer"); T.hidden=false; T.className="timer "+mode; $("t-label").textContent=label;
-  $("t-dot").hidden = mode!=="rec"; $("t-meter-wrap").hidden = mode!=="rec";
-  const t0=performance.now(), ms=sec*1000;
-  while(true){ guard(token); const el=performance.now()-t0; const left=Math.max(0,ms-el);
-    $("t-sec").textContent=Math.ceil(left/1000); $("t-bar").style.width=Math.min(100,el/ms*100)+"%";
-    onTick && onTick(); if(left<=0) break; await sleep(100,token); }
-}
-function listening(label){ const T=$("ex-timer"); T.hidden=false; T.className="timer listen"; $("t-label").textContent=label; $("t-sec").textContent=""; $("t-bar").style.width="0"; $("t-dot").hidden=true; $("t-meter-wrap").hidden=true; }
-
-const RESULTS = {};
-async function recordItem(key,token){
-  const item=ITEMS[key];
-  beep(); await sleep(350,token);
-  const chunks=[]; let mr=null;
-  try{ mr=new MediaRecorder(STREAM); mr.ondataavailable=e=>{ if(e.data.size) chunks.push(e.data); }; mr.start(); }catch(_){ mr=null; }
-  const t0=performance.now();
-  const st=startRecognition(s=>{ $("ex-live").textContent = transcriptOf(s); });
-  try{ await countdown(item.rec,"rec","解答時間",token); }
-  finally{
-    const stopRec = mr && mr.state!=="inactive" ? new Promise(r=>{ mr.onstop=r; mr.stop(); }) : Promise.resolve();
-    await Promise.all([stopRec, st.stop ? st.stop() : Promise.resolve()]);
-  }
-  beep(660,.2);
-  const text=transcriptOf(st);
-  const confs=st.finals.map(f=>f.conf).filter(c=>typeof c==="number" && c>0);
-  RESULTS[key]={
-    text, audio: chunks.length ? URL.createObjectURL(new Blob(chunks,{type:chunks[0].type||"audio/webm"})) : null,
-    startDelay: st.firstAt ? (st.firstAt-t0)/1000 : null,
-    speakSpan: st.firstAt && st.lastAt ? (st.lastAt-st.firstAt)/1000 : null,
-    conf: confs.length ? confs.reduce((a,b)=>a+b,0)/confs.length : null,
-    srError: st.error
-  };
-  $("ex-live").textContent="";
-}
-
-/* ---------------- part flows ---------------- */
-async function runA(token){
-  const intro="Part A は、音読の問題で、全部で2問あります。聞いている人に、意味や内容が伝わるように、英文を声に出して読んでください。この問題には、準備時間がそれぞれ30秒間あります。録音開始の音が鳴ってから、音読を始めてください。録音時間はそれぞれ30秒間です。";
-  setHeader(ITEMS.A1); setStage(""); setInstr(intro); listening("説明"); await speak(intro,"ja",token);
-  for(const k of ORDER.A){ const it=ITEMS[k]; setHeader(it);
-    const ins=it.context+"次の原稿を声に出して読んでください。録音開始の音が鳴ってから、音読を始めてください。";
-    setInstr(ins); setStage(`<p class="passage">${it.script}</p>`); listening("説明"); await speak(ins,"ja",token);
-    await countdown(it.prep,"prep","準備時間",token); await recordItem(k,token); await sleep(800,token); }
-}
-async function runB(token){
-  const intro="Part B は、会話の問題で、全部で5問あります。あなたが質問に答える問題が4問と、あなたから質問する問題が1問あります。質問に答える問題には準備時間はありません。あなたから質問する問題には準備時間が10秒間あります。解答時間はそれぞれ15秒以内です。";
-  setHeader(ITEMS.B1); setStage(""); setInstr(intro); listening("説明"); await speak(intro,"ja",token);
-  const sit="あなたは、オーストラリアに留学しています。クラスメイトのエマと、週末に町のイベントに行くことになりました。あなたとエマは、イベントのチラシを見ながら話しています。下に表示されているのは、二人が見ているチラシです。";
-  setInstr(sit); setStage(flyerSvg()); listening("説明"); await speak(sit,"ja",token);
-  await countdown(10,"listen","チラシを見る",token);
-  const i1="はじめに、エマがチラシについて二つの質問をします。質問に対して英語で答えてください。録音開始の音が鳴ってから、解答を始めてください。";
-  setInstr(i1); listening("説明"); await speak(i1,"ja",token);
-  for(const k of ["B1","B2"]){ setHeader(ITEMS[k]); listening("質問を聞く"); await sleep(400,token); await speak(ITEMS[k].question,"en",token); await recordItem(k,token); await sleep(700,token); }
-  const i2="次に、エマがあなたの日本での生活について二つの質問をします。録音開始の音が鳴ってから、解答を始めてください。";
-  setStage(""); setInstr(i2); listening("説明"); await speak(i2,"ja",token);
-  for(const k of ["B3","B4"]){ setHeader(ITEMS[k]); listening("質問を聞く"); await sleep(400,token); await speak(ITEMS[k].question,"en",token); await recordItem(k,token); await sleep(700,token); }
-  setHeader(ITEMS.B5);
-  const i3="今度は、あなたがエマに対して、次の画面で表示されることについて英語で質問してください。準備時間は10秒間です。録音開始の音が鳴ってから、質問してください。";
-  setInstr(i3); listening("説明"); await speak(i3,"ja",token);
-  setStage(`<p class="small muted">エマに対して、次のことを英語で質問してください。</p><div class="prompt-box">「オーストラリアで人気のスポーツ」</div>`);
-  await countdown(10,"prep","準備時間",token); await recordItem("B5",token); await sleep(700,token);
-}
-async function runC(token){
-  const it=ITEMS.C; setHeader(it);
-  const ins="Part C は、イラストを説明する問題です。1から4までの全てのイラストについて、順番にストーリーを英語で話してください。あなたは、留学生のトムに、先週の出来事を英語で説明しようとしています。一番上のイラストに描かれた人物になったつもりで、トムに伝わるように英語で話してください。イラストの上に表示される表現、ラスト・ウィークを最初に使って解答してください。準備時間は30秒間、解答時間は40秒以内です。";
-  setInstr(ins.replace("ラスト・ウィーク","“Last week”")); setStage(partCSvg()); listening("説明"); await speak(ins,"ja",token);
-  await countdown(it.prep,"prep","準備時間",token); await recordItem("C",token); await sleep(700,token);
-}
-async function runD(token){
-  const it=ITEMS.D; setHeader(it);
-  const ins="Part D は、英語の授業で、与えられたテーマに対して、自分の意見とその理由を英語で述べる問題です。先生の英語の説明を聞き、あなたの意見とそう考える理由を、具体的な例を加えるなどして、できるだけ詳しく話してください。三つのヒントから一つ選ぶか、あなた自身の考えを述べても構いません。準備時間は60秒間、解答時間は40秒以内です。";
-  setInstr(ins); setStage(`<div class="theme-card"><span class="eyebrow">TODAY'S SHORT SPEECH</span><p class="q">What is the best way to spend summer vacation?</p>
-    <div class="chips"><span class="chip">traveling</span><span class="chip">volunteering</span><span class="chip">reading books</span><span class="chip">your own idea</span></div></div>`);
-  listening("説明"); await speak(ins,"ja",token);
-  listening("先生の説明"); await speak(D_TALK,"en",token); await sleep(600,token);
-  await speak("Listen again.","en",token); await speak(D_TALK.replace("Hello everyone. ",""),"en",token);
-  await countdown(it.prep,"prep","準備時間",token); await recordItem("D",token); await sleep(700,token);
-}
-const RUNNERS={A:runA,B:runB,C:runC,D:runD};
-
-async function startExam(parts){
-  if(!(await initMic())){ toast("マイクが使えません。受験前のチェックを確認してください"); return; }
-  if(ac() && AC.state==="suspended") await AC.resume();
-  for(const k of Object.keys(RESULTS)) delete RESULTS[k];
-  const token=++RUN; show("exam");
-  try{
-    for(const p of parts){ await RUNNERS[p](token); }
-    timerOff(); setStage(""); setInstr("これで終わりです。おつかれさまでした。");
-    await speak("これで終わりです。おつかれさまでした。","ja",token);
-    renderResults(parts);
-  }catch(e){ if(!(e instanceof Aborted)) { console.error(e); toast("エラーが起きました: "+e.message); show("home"); } }
-}
-$("btn-quit").onclick=()=>{ RUN++; if("speechSynthesis" in window) speechSynthesis.cancel(); timerOff(); show("home"); };
-$("btn-full").onclick=()=>startExam(["A","B","C","D"]);
-document.querySelectorAll(".part-btn").forEach(b=>b.onclick=()=>startExam([b.dataset.part]));
-
-/* ---------------- pre-checks ---------------- */
-$("btn-mic").onclick=async()=>{ const ok=await initMic(); if(ac() && AC.state==="suspended") await AC.resume();
-  $("dot-mic").className="dot "+(ok?"ok":"ng");
-  $("mic-msg").textContent = ok ? "マイクが使えます。話すと緑のバーが動きます。" : "マイクが使えません。ブラウザのアドレスバー左のアイコンからマイクを「許可」にして、ページを読み込み直してください。"; };
-$("btn-tts").onclick=async()=>{ const t=++RUN; await speak("Hello! This is a practice test. Can you hear me?","en",t).catch(()=>{});
-  const ok = "speechSynthesis" in window; $("dot-tts").className="dot "+(ok?"ok":"ng");
-  $("tts-msg").textContent = ok ? "聞こえなかった場合は、パソコンの音量と出力先を確認してください。" : "このブラウザは読み上げに対応していません。Google Chromeで開いてください。"; };
-$("btn-sr").onclick=async()=>{
-  if(!SR){ $("dot-sr").className="dot ng"; $("sr-msg").textContent="このブラウザは文字起こしに対応していません。Google Chromeで開いてください（録音と手入力で受験することはできます）。"; return; }
-  if(!(await initMic())){ $("sr-msg").textContent="先にマイクを使えるようにしてください。"; return; }
-  const btn=$("btn-sr"); btn.disabled=true; $("sr-live").textContent="（話してください…）";
-  const st=startRecognition(s=>{ $("sr-live").textContent=transcriptOf(s); });
-  await new Promise(r=>setTimeout(r,5000)); await st.stop(); btn.disabled=false;
-  const t=transcriptOf(st);
-  if(t){ $("dot-sr").className="dot ok"; $("sr-msg").textContent="文字起こしできています。"; $("sr-live").textContent="“"+t+"”"; }
-  else { $("dot-sr").className="dot ng"; $("sr-msg").textContent = st.error==="not-allowed" ? "マイクの使用が許可されていません。" : st.error==="network" ? "文字起こしにはインターネット接続が必要です。" : "文字が出ませんでした。もう少し大きな声で、マイクに近づいて試してください。"; }
-};
-
-/* ---------------- results ---------------- */
-function words(s){ return (s.toLowerCase().replace(/[’']/g,"'").match(/[a-z0-9']+/g))||[]; }
-function lcsAlign(ref,hyp){                // returns boolean array: ref word matched?
-  const n=ref.length,m=hyp.length, dp=Array.from({length:n+1},()=>new Int16Array(m+1));
-  for(let i=n-1;i>=0;i--) for(let j=m-1;j>=0;j--) dp[i][j]= ref[i]===hyp[j] ? dp[i+1][j+1]+1 : Math.max(dp[i+1][j],dp[i][j+1]);
-  const hit=new Array(n).fill(false); let i=0,j=0;
-  while(i<n&&j<m){ if(ref[i]===hyp[j]){hit[i]=true;i++;j++;} else if(dp[i+1][j]>=dp[i][j+1]) i++; else j++; }
-  return hit;
-}
-function analyse(key){
-  const it=ITEMS[key], r=RESULTS[key]||{text:""}, w=words(r.text);
-  const out={words:w.length, wpm: r.speakSpan && r.speakSpan>2 ? Math.round(w.length/(r.speakSpan/60)) : null};
-  if(it.script){ const ref=words(it.script), hit=lcsAlign(ref,w);
-    out.coverage=Math.round(hit.filter(Boolean).length/ref.length*100);
-    out.missed=ref.filter((_,i)=>!hit[i]);
-    const rawRef=it.script.split(/\s+/); out.marked=rawRef.map((tok,i)=>hit[i]?tok:`<s>${tok}</s>`).join(" "); }
-  return out;
-}
-function metricsHTML(key){
-  const r=RESULTS[key]||{}, a=analyse(key), m=[];
-  m.push(`<span class="metric">${a.words}語</span>`);
-  if(r.startDelay!=null) m.push(`<span class="metric ${r.startDelay>4?'warn':''}">話し始め ${r.startDelay.toFixed(1)}秒後</span>`);
-  else m.push(`<span class="metric bad">発話を検出できず</span>`);
-  if(a.wpm) m.push(`<span class="metric">${a.wpm}語/分</span>`);
-  if(a.coverage!=null) m.push(`<span class="metric ${a.coverage>=90?'good':a.coverage>=70?'warn':'bad'}">台本の再現率 ${a.coverage}%</span>`);
-  if(r.conf!=null) m.push(`<span class="metric">認識の確信度 ${Math.round(r.conf*100)}%</span>`);
-  return m.join("");
-}
-let CUR_PARTS=[];
-function renderResults(parts){
-  CUR_PARTS=parts; const box=$("res-items"); box.innerHTML="";
-  const keys=parts.flatMap(p=>ORDER[p]);
-  for(const k of keys){ const it=ITEMS[k], r=RESULTS[k]||{text:""};
-    const d=document.createElement("article"); d.className="item";
-    d.innerHTML=`<div class="item-head"><h3>${it.label}</h3><span class="small muted">${it.question?`<span class="en">“${it.question}”</span>`:""}</span></div>
-      ${r.audio?`<audio controls src="${r.audio}"></audio>`:`<p class="small muted">録音データがありません。</p>`}
-      <label class="small muted" for="tx-${k}">文字起こし（実際に話した内容とちがえば直してください）</label>
-      <textarea id="tx-${k}" rows="3"></textarea>
-      <div class="metrics" id="mt-${k}">${metricsHTML(k)}</div>
-      ${it.script?`<p class="missed" id="ms-${k}">${analyse(k).marked}</p><p class="small muted">取り消し線の語は、音声認識に届かなかった語です（読み飛ばし、または発音が伝わりにくかった可能性）。</p>`:""}`;
-    box.appendChild(d);
-    const ta=d.querySelector("textarea"); ta.value=r.text||"";
-    if(!r.text && r.srError) ta.placeholder="文字起こしできませんでした。録音を聞いて、話した英語を入力してください。";
-    ta.addEventListener("input",()=>{ RESULTS[k]=Object.assign(RESULTS[k]||{},{text:ta.value}); $("mt-"+k).innerHTML=metricsHTML(k);
-      if(it.script) $("ms-"+k).innerHTML=analyse(k).marked; $("prompt-out").value=buildPrompt(); });
-  }
-  $("models").innerHTML = keys.map(k=>`<div><h3 style="font-size:.95rem">${ITEMS[k].label}</h3><p class="model">${ITEMS[k].script||ITEMS[k].model}</p></div>`).join("");
-  $("prompt-out").value=buildPrompt(); show("results");
-}
-
-const RUBRIC = `【ESAT-J YEAR 3 採点基準（令和8年度・東京都教育委員会公表の要点）】
-評価の3観点：コミュニケーションの達成度／言語使用（文法・語彙）／音声（発音・速さ・間）
-Part A 音読（2問）：「発音と強勢」「読む速さや間の取り方」の2観点を、それぞれ4段階（上から：聞き手が十分理解できる→おおむね伝わる→伝わらない→大部分が分かりにくい/量が不十分）＋解答なし で評価。
-Part B 会話（5問：答える4問＋質問する1問）CEFR-Jで判定：
- A2.1＝5問すべて場面に応じた適切な解答。必要に応じて文を使い、文法・語彙が適切。
- A1.3＝少なくとも4問適切。平易な文。基礎的な誤りは多少あるが十分理解できる。
- A1.2＝少なくとも3問適切。誤りがあり分かりにくいことがある。
- A1.1＝少なくとも1問適切。誤りが多い。 PreA1＝語句を並べる程度。 グレードなし＝的外れ／英語として通じない／発話量不足。
-Part C ナレーション（4コマ）：
- A2.2＝重要な5ポイントに触れ、4枚すべてを時間順に説明。接続詞・代名詞などを効果的に使い、文法・語彙が幅広く適切。
- A2.1＝重要な4ポイントに触れ4枚すべてを順序立てて説明。つなぎの表現を使っている。
- A1.3＝4枚を一連の出来事として説明しているが1枚の説明が不十分。基礎的な誤りが多少ある。
- A1.2＝少なくとも2枚を説明。つなぎの表現を適切に使えていない。
- A1.1＝出来事に触れるが適切な説明になっていない。 PreA1／グレードなし は上と同様。
-Part D ショートスピーチ：
- A2.2＝ヒントか自分の考えを基に、効果的な理由や例を加えて明確な意見。補足情報でより詳しく説明。接続詞を効果的に使い、文法・語彙が幅広い。
- A2.1＝理由や例を加えて明確な意見。補足しようとしているが十分でないことがある。
- A1.3＝少なくとも一つの理由や例を加えて意見を述べている。
- A1.2＝意見と理由を伝えようとしているが接続詞などを使っていない。
- A1.1＝意見を述べようとしているが理由や例がない。 PreA1／グレードなし は上と同様。
-ESAT-J GRADE（総合・参考CEFR-J）：A＝A2.2、B＝A2.1、C＝A1.3、D＝A1.2、E＝A1.1、F＝PreA1。スコアの目安：A 80〜100点、B 65〜79点、C 50〜64点、D 35〜49点、E 1〜34点、F 0点。`;
-
-function buildPrompt(){
-  const keys=CUR_PARTS.flatMap(p=>ORDER[p]);
-  const lines=keys.map(k=>{ const it=ITEMS[k], r=RESULTS[k]||{}, a=analyse(k);
-    const meta=[`語数 ${a.words}`, r.startDelay!=null?`話し始めまで ${r.startDelay.toFixed(1)}秒`:"発話検出なし", a.wpm?`話す速さ 約${a.wpm}語/分`:null,
-      a.coverage!=null?`台本との一致率 ${a.coverage}%`:null, r.conf!=null?`音声認識の確信度 平均${Math.round(r.conf*100)}%`:null].filter(Boolean).join("／");
-    return `■ ${it.label}（準備${it.prep}秒・解答${it.rec}秒）
-場面：${it.context}
-${it.question?`質問（音声）：${it.question}\n`:""}${it.script?`音読する原稿：${it.script}\n音声認識に届かなかった語：${a.missed.length?a.missed.join(", "):"なし"}\n`:""}生徒の解答（音声認識による文字起こし）：${r.text&&r.text.trim()?r.text.trim():"（発話なし、または認識できず）"}
-計測値：${meta}`; }).join("\n\n");
-  return `あなたは東京都の中学校英語スピーキングテスト（ESAT-J YEAR 3）に詳しい英語の先生です。中学3年生が、ESAT-J YEAR 3と同じ形式の模試を受けました。下の公式採点基準に沿って採点し、改善のアドバイスをしてください。
-
-注意：
-・生徒の解答は録音を音声認識で文字にしたものです。発音そのものは聞けないので、認識に失敗した語や、台本にない語・不自然な語は「聞き手に伝わりにくかった可能性」として扱い、断定は避けてください。
-・Part Aは、台本との一致率、話す速さ（目安：100〜140語/分）、話し始めの遅れを手がかりに2観点を判定してください。
-・解答時間内に話せた量も評価に含めてください。
-
-${RUBRIC}
-
-【受験結果】
-${lines}
-
-【出力してほしい内容】（中学生に分かる日本語で）
-1. パートごとの判定：Part Aは2観点の段階、Part B〜DはCEFR-Jレベル。判定の理由を一言ずつ。
-2. 推定ESAT-J GRADEと点数の目安（あくまで推定であることを明記）。
-3. 問題ごとの講評：良かった点、直すべき点、より高い評価になる解答例（生徒の解答を生かして書き直したもの）。
-4. 本番（11月22日）までの優先順位つきの練習メニューを3つ。`;
-}
-$("btn-copy").onclick=async()=>{ const t=buildPrompt(); $("prompt-out").value=t;
-  try{ await navigator.clipboard.writeText(t); toast("コピーしました。Claudeのチャットに貼り付けてください"); }
-  catch(_){ const ta=$("prompt-out"); ta.closest("details").open=true; ta.select(); toast("テキストを選択しました。コピーしてください"); } };
-$("btn-save").onclick=()=>{ const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([buildPrompt()],{type:"text/plain"}));
-  const d=new Date(); a.download=`ESAT-J模試_${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}.txt`; a.click(); };
-$("btn-home").onclick=()=>show("home");
+})();
 </script>
 </body>
 </html>
